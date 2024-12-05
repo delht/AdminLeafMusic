@@ -34,13 +34,29 @@
                     include 'modules/Baihat/form_Them.php';
                 }
             } elseif ($tab == 'form2') {
-                include 'modules/Casi/form.php';
+                if ($action == 'sua' && $id) {
+                    include 'modules/CaSi/form_Sua.php';
+                } else {
+                    include 'modules/CaSi/form_Them.php';
+                }
             } elseif ($tab == 'form3') {
-                include 'modules/Album/form.php';
+                if ($action == 'sua' && $id) {
+                    include 'modules/Album/form_Sua.php';
+                } else {
+                    include 'modules/Album/form_Them.php';
+                }
             } elseif ($tab == 'form4') {
-                include 'modules/Theloai/form.php';
+                if ($action == 'sua' && $id) {
+                    include 'modules/TheLoai/form_Sua.php';
+                } else {
+                    include 'modules/TheLoai/form_Them.php';
+                }
             } elseif ($tab == 'form5') {
-                include 'modules/KhuVuc/form.php';
+                if ($action == 'sua' && $id) {
+                    include 'modules/KhuVucNhac/form_Sua.php';
+                } else {
+                    include 'modules/KhuVucNhac/form_Them.php';
+                }
             }
             ?>
         </div>

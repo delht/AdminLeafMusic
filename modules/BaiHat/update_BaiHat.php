@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("ID bài hát không hợp lệ.");
     }
 
-    // Dữ liệu từ form
     $request = [
         "tenBaiHat" => $_POST['request']['tenBaiHat'],
         "caSi" => $_POST['request']['caSi'],
@@ -16,10 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "ngayPhatHanh" => $_POST['request']['ngayPhatHanh']
     ];
 
-    // API URL để cập nhật bài hát
-    $apiUrl = "http://192.168.1.13:8080/api/baihat/update/id=" . $id; // Đảm bảo URL chính xác
 
-    // Gửi dữ liệu qua API
+    $apiUrl = "http://192.168.1.13:8080/api/baihat/update/id=" . $id;
+
     $response = sendDataToApi($apiUrl, $_FILES['file'], $_FILES['img'], $request);
     echo $response;
 }
@@ -33,7 +31,6 @@ function sendDataToApi($url, $file, $img, $json)
 
     $body = '';
 
-    // Thêm file nhạc nếu có
     if (isset($file['error']) && $file['error'] === UPLOAD_ERR_OK) {
         $fileContent = file_get_contents($file['tmp_name']);
         $body .= "--$boundary\r\n";
@@ -42,7 +39,6 @@ function sendDataToApi($url, $file, $img, $json)
         $body .= $fileContent . "\r\n";
     }
 
-    // Thêm ảnh nếu có
     if (isset($img['error']) && $img['error'] === UPLOAD_ERR_OK) {
         $imgContent = file_get_contents($img['tmp_name']);
         $body .= "--$boundary\r\n";
@@ -51,7 +47,7 @@ function sendDataToApi($url, $file, $img, $json)
         $body .= $imgContent . "\r\n";
     }
 
-    // Dữ liệu bài hát dưới dạng JSON
+
     $body .= "--$boundary\r\n";
     $body .= "Content-Disposition: form-data; name=\"request\"\r\n";
     $body .= "Content-Type: application/json\r\n\r\n";
@@ -59,9 +55,8 @@ function sendDataToApi($url, $file, $img, $json)
 
     $body .= "--$boundary--";
 
-    // Gửi yêu cầu PUT
     $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT"); // Sử dụng PUT thay vì POST
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

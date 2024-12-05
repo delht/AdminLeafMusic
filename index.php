@@ -22,25 +22,25 @@
 
         <div class="content">
             <?php
-            $tab = isset($_GET['tab']) ? $_GET['tab'] : 'form1';
             
-            // Chuyển tiếp tới form quản lý bài hát
+            $tab = isset($_GET['tab']) ? $_GET['tab'] : 'form1';
+            $action = isset($_GET['action']) ? $_GET['action'] : null;
+            $id = isset($_GET['id']) ? $_GET['id'] : null;
+            
             if ($tab == 'form1') {
-                if (isset($_GET['id']) && !empty($_GET['id'])) {
-                    // Kiểm tra và include form sửa nếu có id
+                if ($action == 'sua' && $id) {
                     include 'modules/Baihat/form_Sua.php';
                 } else {
-                    // Include form thêm nếu không có id
                     include 'modules/Baihat/form_Them.php';
                 }
             } elseif ($tab == 'form2') {
-                include 'modules/Casi/form.php';  // Include form quản lý ca sĩ
+                include 'modules/Casi/form.php';
             } elseif ($tab == 'form3') {
-                include 'modules/Album/form.php';  // Include form quản lý album
+                include 'modules/Album/form.php';
             } elseif ($tab == 'form4') {
-                include 'modules/Theloai/form.php';  // Include form quản lý thể loại
+                include 'modules/Theloai/form.php';
             } elseif ($tab == 'form5') {
-                include 'modules/KhuVuc/form.php';  // Include form quản lý khu vực nhạc
+                include 'modules/KhuVuc/form.php';
             }
             ?>
         </div>

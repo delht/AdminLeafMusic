@@ -19,7 +19,7 @@ switch ($tab) {
                     // echo '<td>' . htmlspecialchars($baiHat['idBaiHat']) . '</td>';
                     echo '<td>' . htmlspecialchars($baiHat['tenBaiHat']) . '</td>';
                     echo '<td>
-                    <a href="modules/Baihat/form_Sua.php?id=' . htmlspecialchars($baiHat['idBaiHat']) . '">Sửa</a> | 
+                     <a href="?tab=form1&action=sua&id=' . htmlspecialchars($baiHat['idBaiHat']) . '">Sửa</a> | 
                     <a href="modules/Baihat/delete_BaiHat.php?id=' . htmlspecialchars($baiHat['idBaiHat']) . '" onclick="return confirm(\'Bạn có chắc chắn muốn xóa?\')">Xóa</a>
                     </td>';
                     echo '</tr>';

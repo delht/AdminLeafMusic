@@ -22,31 +22,95 @@ if ($id) {
         value="<?php echo htmlspecialchars($baiHat['tenBaiHat']); ?>" required><br><br>
 
     <label for="caSi">Ca sĩ:</label><br>
-    <input type="number" id="caSi" name="request[caSi]"
-        value="<?php echo htmlspecialchars($baiHat['caSi']['idCaSi']); ?>" required><br><br>
+    <select id="caSi" name="request[caSi]" required>
+        <option value="" disabled>Chọn ca sĩ</option>
+        <?php
+        $url = 'http://192.168.83.1:8080/api/casi/all';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $caSisis = json_decode($response, true);
+            foreach ($caSisis as $caSi) {
+                $selected = ($caSi['idCaSi'] == $baiHat['caSi']['idCaSi']) ? 'selected' : '';
+                echo "<option value='" . $caSi['idCaSi'] . "' $selected>" . $caSi['tenCaSi'] . "</option>";
+            }
+        }
+        ?>
+    </select><br><br>
 
     <label for="theLoai">Thể loại:</label><br>
-    <input type="number" id="theLoai" name="request[theLoai]"
-        value="<?php echo htmlspecialchars($baiHat['theLoai']['idTheLoai']); ?>" required><br><br>
+    <select id="theLoai" name="request[theLoai]" required>
+        <option value="" disabled>Chọn thể loại</option>
+        <?php
+        $url = 'http://192.168.83.1:8080/api/theloai/all';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $theLoais = json_decode($response, true);
+            foreach ($theLoais as $theLoai) {
+                $selected = ($theLoai['idTheLoai'] == $baiHat['theLoai']['idTheLoai']) ? 'selected' : '';
+                echo "<option value='" . $theLoai['idTheLoai'] . "' $selected>" . $theLoai['tenTheLoai'] . "</option>";
+            }
+        }
+        ?>
+    </select><br><br>
 
     <label for="album">Album:</label><br>
-    <input type="number" id="album" name="request[album]"
-        value="<?php echo htmlspecialchars($baiHat['album']['idAlbum']); ?>" required><br><br>
+    <select id="album" name="request[album]" required>
+        <option value="" disabled>Chọn album</option>
+        <?php
+        $url = 'http://192.168.83.1:8080/api/album/all';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $albums = json_decode($response, true);
+            foreach ($albums as $album) {
+                $selected = ($album['idAlbum'] == $baiHat['album']['idAlbum']) ? 'selected' : '';
+                echo "<option value='" . $album['idAlbum'] . "' $selected>" . $album['tenAlbum'] . "</option>";
+            }
+        }
+        ?>
+    </select><br><br>
 
     <label for="khuVucNhac">Khu vực nhạc:</label><br>
-    <input type="number" id="khuVucNhac" name="request[khuVucNhac]"
-        value="<?php echo htmlspecialchars($baiHat['khuVuc']['idKhuVuc']); ?>" required><br><br>
+    <select id="khuVucNhac" name="request[khuVucNhac]" required>
+        <option value="" disabled>Chọn khu vực</option>
+        <?php
+        $url = 'http://192.168.83.1:8080/api/khuvuc/all';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+            $khuVucs = json_decode($response, true);
+            foreach ($khuVucs as $khuVuc) {
+                $selected = ($khuVuc['idKhuVuc'] == $baiHat['khuVuc']['idKhuVuc']) ? 'selected' : '';
+                echo "<option value='" . $khuVuc['idKhuVuc'] . "' $selected>" . $khuVuc['tenKhuVuc'] . "</option>";
+            }
+        }
+        ?>
+    </select><br><br>
 
     <?php
-            if (isset($baiHat['ngayPhatHanh']) && is_array($baiHat['ngayPhatHanh'])):
-                $ngayPhatHanh = sprintf('%04d-%02d-%02dT%02d:%02d', 
-                    $baiHat['ngayPhatHanh'][0], // Năm
-                    $baiHat['ngayPhatHanh'][1], // Tháng
-                    $baiHat['ngayPhatHanh'][2], // Ngày
-                    $baiHat['ngayPhatHanh'][3], // Giờ
-                    $baiHat['ngayPhatHanh'][4]  // Phút
-                );
-            ?>
+    if (isset($baiHat['ngayPhatHanh']) && is_array($baiHat['ngayPhatHanh'])):
+        $ngayPhatHanh = sprintf('%04d-%02d-%02dT%02d:%02d', 
+            $baiHat['ngayPhatHanh'][0], // Năm
+            $baiHat['ngayPhatHanh'][1], // Tháng
+            $baiHat['ngayPhatHanh'][2], // Ngày
+            $baiHat['ngayPhatHanh'][3], // Giờ
+            $baiHat['ngayPhatHanh'][4]  // Phút
+        );
+    ?>
     <label for="ngayPhatHanh">Ngày phát hành:</label><br>
     <input type="datetime-local" id="ngayPhatHanh" name="request[ngayPhatHanh]" value="<?php echo $ngayPhatHanh; ?>"
         required><br><br>
@@ -65,9 +129,6 @@ if ($id) {
 <?php else: ?>
 <p>Không tìm thấy bài hát.</p>
 <?php endif; ?>
-
-
-
 
 <style>
 h2 {
@@ -118,5 +179,29 @@ form>label,
 form>input,
 form>button {
     margin-bottom: 0px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+select:focus {
+    background-color: #ffffff;
+    border-color: #3498db;
+    outline: none;
+}
+
+select option {
+    padding: 10px;
+    font-size: 16px;
 }
 </style>

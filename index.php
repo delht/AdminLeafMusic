@@ -75,6 +75,12 @@
         color: #95a5a6;
         font-style: italic;
     }
+
+    .list {
+        padding-top: 20px;
+        flex: 1;
+        padding-right: 100px;
+    }
     </style>
 
 </head>

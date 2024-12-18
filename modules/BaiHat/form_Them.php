@@ -4,16 +4,156 @@
     <input type="text" id="tenBaiHat" name="request[tenBaiHat]" required><br><br>
 
     <label for="caSi">Ca sĩ:</label><br>
-    <input type="number" id="caSi" name="request[caSi]" required><br><br>
+    <select id="caSi" name="request[caSi]" required>
+        <option value="" disabled selected>Chọn ca sĩ</option> <!-- Lựa chọn rỗng -->
+        <?php
+        
+    // URL API lấy danh sách ca sĩ
+    $url = 'http://192.168.83.1:8080/api/casi/all';
+    
+    // Khởi tạo cURL
+    $ch = curl_init($url);
+    
+    // Thiết lập các tùy chọn cURL
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    // Thực hiện cURL và lưu kết quả vào biến $response
+    $response = curl_exec($ch);
+    
+    // Đóng kết nối cURL
+    curl_close($ch);
+    
+    // Kiểm tra nếu có lỗi khi tải dữ liệu
+    if ($response === false) {
+        echo "<option disabled>Có lỗi khi tải dữ liệu ca sĩ</option>";
+    } else {
+        // Giải mã dữ liệu JSON thành mảng PHP
+        $caSisis = json_decode($response, true);
+        
+        // Kiểm tra nếu mảng ca sĩ tồn tại
+        if (is_array($caSisis)) {
+            // Lặp qua danh sách ca sĩ và hiển thị trong dropdown
+            foreach ($caSisis as $caSi) {
+                echo "<option value='" . $caSi['idCaSi'] . "'>" . $caSi['tenCaSi'] . "</option>";
+            }
+        } else {
+            echo "<option disabled>Không có ca sĩ nào</option>";
+        }
+    }
+    ?>
+    </select><br><br>
 
     <label for="theLoai">Thể loại:</label><br>
-    <input type="number" id="theLoai" name="request[theLoai]" required><br><br>
+    <select id="theLoai" name="request[theLoai]" required>
+        <option value="" disabled selected>Chọn thể loại</option> <!-- Lựa chọn rỗng -->
+        <?php
+    // URL API lấy danh sách thể loại
+    $url = 'http://192.168.83.1:8080/api/theloai/all';
+    
+    // Khởi tạo cURL
+    $ch = curl_init($url);
+    
+    // Thiết lập các tùy chọn cURL
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    // Thực hiện cURL và lưu kết quả vào biến $response
+    $response = curl_exec($ch);
+    
+    // Đóng kết nối cURL
+    curl_close($ch);
+    
+    // Kiểm tra nếu có lỗi khi tải dữ liệu
+    if ($response === false) {
+        echo "<option disabled>Có lỗi khi tải dữ liệu thể loại</option>";
+    } else {
+        // Giải mã dữ liệu JSON thành mảng PHP
+        $theLoais = json_decode($response, true);
+        
+        // Kiểm tra nếu mảng thể loại tồn tại
+        if (is_array($theLoais)) {
+            // Lặp qua danh sách thể loại và hiển thị trong dropdown
+            foreach ($theLoais as $theLoai) {
+                echo "<option value='" . $theLoai['idTheLoai'] . "'>" . $theLoai['tenTheLoai'] . "</option>";
+            }
+        } else {
+            echo "<option disabled>Không có thể loại nào</option>";
+        }
+    }
+    ?>
+    </select><br><br>
 
     <label for="album">Album:</label><br>
-    <input type="number" id="album" name="request[album]" required><br><br>
+    <select id="album" name="request[album]" required>
+        <option value="" disabled selected>Chọn album</option> <!-- Lựa chọn rỗng -->
+        <?php
+
+        $url = 'http://192.168.83.1:8080/api/album/all';
+        $ch = curl_init($url);
+        
+     
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        
+    
+        curl_close($ch);
+        
+     
+        if ($response === false) {
+            echo "<option disabled>Có lỗi khi tải dữ liệu album</option>";
+        } else {
+    
+            $albums = json_decode($response, true);
+            
+    
+            if (is_array($albums)) {
+                foreach ($albums as $album) {
+                    echo "<option value='" . $album['idAlbum'] . "'>" . $album['tenAlbum'] . "</option>";
+                }
+            } else {
+                echo "<option disabled>Không có album nào</option>";
+            }
+        }
+        ?>
+    </select><br><br>
 
     <label for="khuVucNhac">Khu vực nhạc:</label><br>
-    <input type="number" id="khuVucNhac" name="request[khuVucNhac]" required><br><br>
+    <select id="khuVucNhac" name="request[khuVucNhac]" required>
+        <option value="" disabled selected>Chọn khu vực</option> <!-- Lựa chọn rỗng -->
+        <?php
+    // URL API lấy danh sách khu vực
+    $url = 'http://192.168.83.1:8080/api/khuvuc/all';
+    
+    // Khởi tạo cURL
+    $ch = curl_init($url);
+    
+    // Thiết lập các tùy chọn cURL
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    // Thực hiện cURL và lưu kết quả vào biến $response
+    $response = curl_exec($ch);
+    
+    // Đóng kết nối cURL
+    curl_close($ch);
+    
+    // Kiểm tra nếu có lỗi khi tải dữ liệu
+    if ($response === false) {
+        echo "<option disabled>Có lỗi khi tải dữ liệu khu vực</option>";
+    } else {
+        // Giải mã dữ liệu JSON thành mảng PHP
+        $khuVucs = json_decode($response, true);
+        
+        // Kiểm tra nếu mảng khu vực tồn tại
+        if (is_array($khuVucs)) {
+            // Lặp qua danh sách khu vực và hiển thị trong dropdown
+            foreach ($khuVucs as $khuVuc) {
+                echo "<option value='" . $khuVuc['idKhuVuc'] . "'>" . $khuVuc['tenKhuVuc'] . "</option>";
+            }
+        } else {
+            echo "<option disabled>Không có khu vực nào</option>";
+        }
+    }
+    ?>
+    </select><br><br>
 
     <label for="ngayPhatHanh">Ngày phát hành:</label><br>
     <input type="datetime-local" id="ngayPhatHanh" name="request[ngayPhatHanh]" required><br><br>
@@ -76,5 +216,29 @@ form>label,
 form>input,
 form>button {
     margin-bottom: 0px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+select:focus {
+    background-color: #ffffff;
+    border-color: #3498db;
+    outline: none;
+}
+
+select option {
+    padding: 10px;
+    font-size: 16px;
 }
 </style>

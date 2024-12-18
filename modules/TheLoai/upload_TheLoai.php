@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $jsonData = json_encode($data);
 
-    $url = 'http://192.168.1.13:8080/api/theloai/add';
+    $url = 'http://192.168.83.1:8080/api/theloai/add';
 
     $ch = curl_init($url);
 

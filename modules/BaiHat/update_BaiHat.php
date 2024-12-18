@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
 
-    $apiUrl = "http://192.168.1.13:8080/api/baihat/update/id=" . $id;
+    $apiUrl = "http://192.168.83.1:8080/api/baihat/update/id=" . $id;
 
     $response = sendDataToApi($apiUrl, $_FILES['file'], $_FILES['img'], $request);
     echo $response;

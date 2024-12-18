@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tenCaSi = $_POST['ten_casi'];  // thay đổi 'tenCaSi' thành 'ten_casi'
 
     // Đường dẫn API của ca sĩ
-    $apiUrl = "http://192.168.1.13:8080/api/casi/add";
+    $apiUrl = "http://192.168.83.1:8080/api/casi/add";
 
     // Gửi yêu cầu API
     $response = sendDataToApi($apiUrl, $tenCaSi, $_FILES['img']);

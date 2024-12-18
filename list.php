@@ -4,7 +4,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : 'form1';
 switch ($tab) {
     case 'form1':
         echo '<h2>Danh sách bài hát</h2>';
-        $apiUrl = "http://192.168.1.13:8080/api/baihat/all";
+        $apiUrl = "http://192.168.83.1:8080/api/baihat/all";
         $response = file_get_contents($apiUrl);
         
         if ($response === FALSE) {
@@ -33,7 +33,7 @@ switch ($tab) {
 
     case 'form2':
         echo '<h2>Danh sách ca sĩ</h2>';
-        $apiUrl = "http://192.168.1.13:8080/api/casi/all";
+        $apiUrl = "http://192.168.83.1:8080/api/casi/all";
         $response = file_get_contents($apiUrl);
         
         if ($response === FALSE) {
@@ -62,7 +62,7 @@ switch ($tab) {
 
     case 'form3':
         echo '<h2>Danh sách album</h2>';
-        $apiUrl = "http://192.168.1.13:8080/api/album/all";
+        $apiUrl = "http://192.168.83.1:8080/api/album/all";
         $response = file_get_contents($apiUrl);
         
         if ($response === FALSE) {
@@ -90,7 +90,7 @@ switch ($tab) {
         
     case 'form4':
         echo '<h2>Danh sách thể loại</h2>';
-        $apiUrl = "http://192.168.1.13:8080/api/theloai/all";
+        $apiUrl = "http://192.168.83.1:8080/api/theloai/all";
         $response = file_get_contents($apiUrl);
             
         if ($response === FALSE) {
@@ -118,7 +118,7 @@ switch ($tab) {
 
     case 'form5':
         echo '<h2>Danh sách khu vực</h2>';
-        $apiUrl = "http://192.168.1.13:8080/api/khuvuc/all";
+        $apiUrl = "http://192.168.83.1:8080/api/khuvuc/all";
         $response = file_get_contents($apiUrl);
                 
         if ($response === FALSE) {

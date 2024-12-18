@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "$id";
 
     $ten_casi = trim($_POST['ten_casi']);
-    $apiUrl = "http://192.168.1.13:8080/api/casi/update/id=$id";  // URL với dấu "="
+    $apiUrl = "http://192.168.83.1:8080/api/casi/update/id=$id";  // URL với dấu "="
 
     $response = sendDataToApi($apiUrl, $_FILES['img'], $ten_casi);
     echo $response;

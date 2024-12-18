@@ -11,7 +11,7 @@
             "ngay_phathanh" => $_POST['request']['ngayPhatHanh']
         ];
 
-        $apiUrl = "http://192.168.1.13:8080/api/album/add";
+        $apiUrl = "http://192.168.83.1:8080/api/album/add";
 
         $response = sendDataToApi($apiUrl, $_FILES['img'], $album);
         echo $response;

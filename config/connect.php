@@ -1,7 +1,7 @@
 <?php
 
     $host = 'mysql-8.0.40';
-    $dbname = 'leafmusic2';
+    $dbname = 'leafmusic4';
     $username = 'root';
     $password = 'root';
 

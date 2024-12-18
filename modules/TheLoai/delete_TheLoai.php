@@ -2,7 +2,7 @@
 if (isset($_GET['id'])) {
     $idTheLoai = $_GET['id'];
 
-    $apiUrl = "http://192.168.1.13:8080/api/theloai/delete/id=" . $idTheLoai;
+    $apiUrl = "http://192.168.83.1:8080/api/theloai/delete/id=" . $idTheLoai;
 
     $options = [
         "http" => [

@@ -1,151 +1,143 @@
+<?php
+
+session_start();
+
+// Kiểm tra nếu form được gửi
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+
+    $api_url = "http://192.168.83.1:8080/api/taikhoan/dangnhap2";
+
+
+    $data = array(
+        "username" => $username,
+        "password" => $password
+    );
+
+    // Cấu hình cURL để gọi API
+    $ch = curl_init($api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    // Gửi request và nhận response
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) {
+        $response_data = json_decode($response, true);
+
+        // Xử lý vai trò và lưu thông tin vào session
+        if ($response_data['vaitro'] === 'admin') {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            $_SESSION['vaitro'] = 'admin';
+            header("Location: index2.php");
+            exit;
+        } elseif ($response_data['vaitro'] === 'user') {
+            $error_message = "Bạn không thể truy cập vào hệ thống!";
+        } else {
+            $error_message = "Vai trò không xác định!";
+        }
+    } else {
+        $error_message = "Đăng nhập không thành công! Vui lòng kiểm tra lại thông tin.";
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý</title>
-    <link rel="stylesheet" href="css/style.css">
-
+    <title>Đăng nhập</title>
     <style>
-    /* Reset margin và padding */
-    * {
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(255, 255, 255);
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
 
-    /* Thiết lập font chữ mặc định */
-    /* body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+    .login-container {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
         color: #333;
-        padding: 20px;
-    } */
-
-    /* Định dạng tiêu đề */
-    h2 {
-        color: #2c3e50;
-        margin-bottom: 20px;
     }
 
-    /* Tạo kiểu cho bảng */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
+    /* Form styling */
+    form {
+        display: flex;
+        flex-direction: column;
     }
 
-    /* Định dạng các ô trong bảng */
-    th,
-    td {
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="password"] {
         padding: 10px;
-        text-align: left;
         border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
     }
 
-    /* Màu nền cho các tiêu đề bảng */
-    th {
-        background-color: #3498db;
-        color: white;
+    button {
+        padding: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
     }
 
-    /* Định dạng các đường liên kết */
-    a {
-        color: #3498db;
-        text-decoration: none;
+    button:hover {
+        background-color: #0056b3;
     }
 
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Định dạng các ô có nội dung cảnh báo */
-    a:active {
-        color: #2980b9;
-    }
-
-    /* Định dạng cho thông báo lỗi */
-    p {
-        color: #e74c3c;
-    }
-
-    /* Định dạng cho các trường hợp không có dữ liệu */
-    .no-data {
-        color: #95a5a6;
-        font-style: italic;
-    }
-
-    .list {
-        padding-top: 20px;
-        flex: 1;
-        padding-right: 100px;
+    /* Thông báo lỗi */
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-align: center;
     }
     </style>
-
 </head>
 
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <ul>
-                <li><a href="?tab=form1">Quản lý bài hát</a></li>
-                <li><a href="?tab=form2">Quản lý ca sĩ</a></li>
-                <li><a href="?tab=form3">Quản lý Album</a></li>
-                <li><a href="?tab=form4">Quản lý Thể loại</a></li>
-                <li><a href="?tab=form5">Quản lý khu vực nhạc</a></li>
-            </ul>
-        </div>
-
-        <div class="content">
-            <?php
-            
-            $tab = isset($_GET['tab']) ? $_GET['tab'] : 'form1';
-            $action = isset($_GET['action']) ? $_GET['action'] : null;
-            $id = isset($_GET['id']) ? $_GET['id'] : null;
-            
-            if ($tab == 'form1') {
-                if ($action == 'sua' && $id) {
-                    include 'modules/Baihat/form_Sua.php';
-                } else {
-                    include 'modules/Baihat/form_Them.php';
-                }
-            } elseif ($tab == 'form2') {
-                if ($action == 'sua' && $id) {
-                    include 'modules/CaSi/form_Sua.php';
-                } else {
-                    include 'modules/CaSi/form_Them.php';
-                }
-            } elseif ($tab == 'form3') {
-                if ($action == 'sua' && $id) {
-                    include 'modules/Album/form_Sua.php';
-                } else {
-                    include 'modules/Album/form_Them.php';
-                }
-            } elseif ($tab == 'form4') {
-                if ($action == 'sua' && $id) {
-                    include 'modules/TheLoai/form_Sua.php';
-                } else {
-                    include 'modules/TheLoai/form_Them.php';
-                }
-            } elseif ($tab == 'form5') {
-                if ($action == 'sua' && $id) {
-                    include 'modules/KhuVucNhac/form_Sua.php';
-                } else {
-                    include 'modules/KhuVucNhac/form_Them.php';
-                }
-            }
-            ?>
-        </div>
-
-        <div class="list">
-            <?php
-            $tab = isset($_GET['tab']) ? $_GET['tab'] : 'form1';
-            include 'list.php';
-            ?>
-        </div>
-
-    </div>
+    <form method="POST" action="">
+        <h2>Đăng nhập</h2>
+        <?php if (!empty($error_message)): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error_message); ?></p>
+        <?php endif; ?>
+        <label for="username">Tên đăng nhập:</label><br>
+        <input type="text" name="username" id="username" required><br><br>
+        <label for="password">Mật khẩu:</label><br>
+        <input type="password" name="password" id="password" required><br><br>
+        <button type="submit">Đăng nhập</button>
+    </form>
 </body>
 
 </html>

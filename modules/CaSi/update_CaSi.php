@@ -54,6 +54,7 @@ function sendDataToApi($url, $img, $ten_casi)
     curl_close($ch);
 
     if ($httpCode === 200) {
+        header("Location: ../../index2.php?tab=form2");
         return "Cập nhật thành công: " . $response;
     } else {
         return "Lỗi cập nhật: HTTP $httpCode\n$response";

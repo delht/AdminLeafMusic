@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     if ($response === FALSE) {
         echo "Lỗi khi xóa thể loại.";
     } else {
-        header("Location: ../../index.php?tab=form4");
+        header("Location: ../../index2.php?tab=form4");
         exit;
     }
 } else {

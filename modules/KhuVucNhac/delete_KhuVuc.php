@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     if ($response === FALSE) {
         echo "Lỗi khi xóa khu vực.";
     } else {
-        header("Location: ../../index.php?tab=form5");
+        header("Location: ../../index2.php?tab=form5");
         exit;
     }
 } else {

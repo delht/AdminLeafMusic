@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     if ($response === FALSE) {
         echo "Lỗi khi xóa bài hát.";
     } else {
-        header("Location: ../../index.php?tab=form1");
+        header("Location: ../../index.php2?tab=form1");
         exit;
     }
 } else {

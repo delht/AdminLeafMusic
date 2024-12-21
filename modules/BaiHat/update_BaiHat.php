@@ -73,9 +73,13 @@ function sendDataToApi($url, $file, $img, $json)
     curl_close($ch);
 
     if ($httpCode === 200) {
+        header("Location: ../../index2.php?tab=form1");
         return "Cập nhật bài hát thành công!";
     } else {
         return "Lỗi cập nhật bài hát: HTTP $httpCode\n$response";
     }
+
+
+
 }
 ?>

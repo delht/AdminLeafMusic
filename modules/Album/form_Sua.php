@@ -43,12 +43,29 @@ if ($id) {
         if ($response !== false) {
             $caSisis = json_decode($response, true);
             foreach ($caSisis as $caSi) {
-                $selected = ($caSi['idCaSi'] == $baiHat['caSi']['idCaSi']) ? 'selected' : '';
+                $selected = ($caSi['idCaSi'] == $album['caSi']['idCaSi']) ? 'selected' : '';
                 echo "<option value='" . $caSi['idCaSi'] . "' $selected>" . $caSi['tenCaSi'] . "</option>";
             }
         }
         ?>
     </select><br><br>
+
+    <?php
+    if (isset($album['ngayPhatHanh']) && is_array($album['ngayPhatHanh'])):
+        $ngayPhatHanh = sprintf('%04d-%02d-%02dT%02d:%02d', 
+            $album['ngayPhatHanh'][0], // Năm
+            $album['ngayPhatHanh'][1], // Tháng
+            $album['ngayPhatHanh'][2], // Ngày
+            $album['ngayPhatHanh'][3], // Giờ
+            $album['ngayPhatHanh'][4]  // Phút
+        );
+    ?>
+    <label for="ngayPhatHanh">Ngày phát hành:</label><br>
+    <input type="datetime-local" id="ngayPhatHanh" name="request[ngayPhatHanh]" value="<?php echo $ngayPhatHanh; ?>"
+        required><br><br>
+    <?php else: ?>
+    <p>Ngày phát hành không hợp lệ.</p>
+    <?php endif; ?>
 
     <label for="img">Tải lên hình ảnh (nếu có):</label><br>
     <input type="file" id="img" name="img" accept="image/*"><br><br>

@@ -7,40 +7,39 @@
     <select id="caSi" name="request[caSi]" required>
         <option value="" disabled selected>Chọn ca sĩ</option> <!-- Lựa chọn rỗng -->
         <?php
+        // URL API lấy danh sách ca sĩ
+        $url = 'http://192.168.83.1:8080/api/casi/all';
         
-    // URL API lấy danh sách ca sĩ
-    $url = 'http://192.168.83.1:8080/api/casi/all';
-    
-    // Khởi tạo cURL
-    $ch = curl_init($url);
-    
-    // Thiết lập các tùy chọn cURL
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
-    // Thực hiện cURL và lưu kết quả vào biến $response
-    $response = curl_exec($ch);
-    
-    // Đóng kết nối cURL
-    curl_close($ch);
-    
-    // Kiểm tra nếu có lỗi khi tải dữ liệu
-    if ($response === false) {
-        echo "<option disabled>Có lỗi khi tải dữ liệu ca sĩ</option>";
-    } else {
-        // Giải mã dữ liệu JSON thành mảng PHP
-        $caSisis = json_decode($response, true);
+        // Khởi tạo cURL
+        $ch = curl_init($url);
         
-        // Kiểm tra nếu mảng ca sĩ tồn tại
-        if (is_array($caSisis)) {
-            // Lặp qua danh sách ca sĩ và hiển thị trong dropdown
-            foreach ($caSisis as $caSi) {
-                echo "<option value='" . $caSi['idCaSi'] . "'>" . $caSi['tenCaSi'] . "</option>";
-            }
+        // Thiết lập các tùy chọn cURL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        // Thực hiện cURL và lưu kết quả vào biến $response
+        $response = curl_exec($ch);
+        
+        // Đóng kết nối cURL
+        curl_close($ch);
+        
+        // Kiểm tra nếu có lỗi khi tải dữ liệu
+        if ($response === false) {
+            echo "<option disabled>Có lỗi khi tải dữ liệu ca sĩ</option>";
         } else {
-            echo "<option disabled>Không có ca sĩ nào</option>";
+            // Giải mã dữ liệu JSON thành mảng PHP
+            $caSisis = json_decode($response, true);
+            
+            // Kiểm tra nếu mảng ca sĩ tồn tại
+            if (is_array($caSisis)) {
+                // Lặp qua danh sách ca sĩ và hiển thị trong dropdown
+                foreach ($caSisis as $caSi) {
+                    echo "<option value='" . $caSi['idCaSi'] . "'>" . $caSi['tenCaSi'] . "</option>";
+                }
+            } else {
+                echo "<option disabled>Không có ca sĩ nào</option>";
+            }
         }
-    }
-    ?>
+        ?>
     </select><br><br>
 
     <label for="ngayPhatHanh">Ngày phát hành:</label><br>
@@ -51,8 +50,6 @@
 
     <button type="submit">Thêm album</button>
 </form>
-
-
 
 <style>
 h2 {
@@ -73,7 +70,6 @@ label {
 }
 
 input[type="text"],
-input[type="number"],
 input[type="datetime-local"],
 input[type="file"] {
     width: 100%;
@@ -92,11 +88,6 @@ button {
     font-size: 16px;
     width: 100%;
     transition: background-color 0.3s ease;
-}
-
-p.error {
-    color: #e74c3c;
-    font-size: 14px;
 }
 
 form>label,

@@ -31,7 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Lỗi cURL: ' . curl_error($ch));
     }
 
+
+
     curl_close($ch);
+
+    header("Location: ../../index2.php?tab=form4");
 
     echo "Thêm thể loại thành công: " . $response;
 }

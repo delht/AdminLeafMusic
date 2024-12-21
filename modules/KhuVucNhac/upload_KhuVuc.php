@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     curl_close($ch);
 
+    header("Location: ../../index2.php?tab=form5");
+
     echo "Thêm khu vực thành công: " . $response;
 }
 ?>

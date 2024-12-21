@@ -76,7 +76,9 @@ function sendDataToApi($url, $json, $file, $img)
     curl_close($ch);
 
     if ($httpCode === 200) {
+        header("Location: ../../index2.php?tab=form1");
         return "Tải lên thành công: " . $response;
+
     } else {
         return "Lỗi tải lên: HTTP $httpCode\n$response";
     }

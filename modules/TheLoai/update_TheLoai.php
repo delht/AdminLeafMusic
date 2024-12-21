@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     curl_close($ch);
 
+    header("Location: ../../index2.php?tab=form4");
+
     echo "Cập nhật thể loại thành công: " . $response;
 }
 ?>

@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("ID album không hợp lệ.");
     }
 
-    if (!isset($_POST['request']['tenAlbum']) || !isset($_POST['request']['idCaSi']) || !isset($_POST['request']['ngayPhatHanh'])) {
+    if (!isset($_POST['request']['tenAlbum']) || !isset($_POST['request']['caSi']) || !isset($_POST['request']['ngayPhatHanh'])) {
         die("Dữ liệu không hợp lệ! Vui lòng kiểm tra lại form.");
     }
 
     $album = [
         "ten_album" => $_POST['request']['tenAlbum'],
-        "id_casi" => $_POST['request']['idCaSi'],
+        "id_casi" => $_POST['request']['caSi'],
         "ngay_phathanh" => $_POST['request']['ngayPhatHanh']
     ];
 
@@ -70,6 +70,7 @@ function sendDataToApi($url, $img, $json)
     curl_close($ch);
 
     if ($httpCode === 200) {
+        header("Location: ../../index2.php?tab=form3");
         return "Cập nhật album thành công!";
     } else {
         return "Lỗi cập nhật album: HTTP $httpCode\n$response";
